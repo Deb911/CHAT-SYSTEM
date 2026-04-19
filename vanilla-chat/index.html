@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💬</text></svg>" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sync Chat UI</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  
+  <div id="auth-screen" class="screen flex-center">
+    <div class="auth-box glass">
+      <h2>Welcome to SyncChat</h2>
+      <p class="subtitle">Enter your details to join</p>
+      
+      <form id="auth-form">
+        <input type="email" id="email" placeholder="Email Address" required />
+        <input type="password" id="password" placeholder="Password" required />
+        
+        <div id="auth-error" class="error-msg" style="display: none;"></div>
+        
+        <button type="submit" id="auth-btn">Log In</button>
+      </form>
+      <p class="toggle-mode">
+        <span id="auth-toggle-text">Need an account?</span>
+        <button type="button" id="toggle-btn">Sign up</button>
+      </p>
+    </div>
+  </div>
+
+  <div id="room-screen" class="screen flex-center" style="display: none;">
+    <div class="auth-box glass text-center">
+       <button id="room-back-btn" class="icon-btn" style="position:absolute; top:20px; left:20px;">
+          <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+       </button>
+       <h2 style="margin-top: 1rem;">Connect to a Space</h2>
+       <p class="subtitle">Share a code to securely chat with someone.</p>
+       
+       <div style="margin-bottom: 2rem;">
+          <input type="text" id="room-input" placeholder="e.g. 5A92X" maxlength="8" style="text-align:center; font-size:1.5rem; letter-spacing: 2px; text-transform: uppercase;" autocomplete="off" />
+       </div>
+       <button id="join-room-btn">Join Space</button>
+       
+       <div class="divider"><span>OR</span></div>
+       
+       <button id="create-room-btn" class="secondary-btn">Create New Code</button>
+    </div>
+  </div>
+
+  <div id="chat-screen" class="screen" style="display: none;">
+    <div class="app-container">
+      <!-- Left Sidebar -->
+      <aside class="sidebar">
+        <header class="sidebar-header">
+          <div class="avatar" id="my-avatar">U</div>
+          <button id="logout-btn" class="icon-btn" title="Logout">
+            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          </button>
+        </header>
+
+        <div class="contact-list" id="contact-list">
+          <div class="contact active">
+            <div class="contact-avatar global-avatar" style="background-color: #005c4b;">🔒</div>
+            <div class="contact-info">
+              <div class="contact-row">
+                <span class="contact-name" id="sidebar-room-name">Space Code: ---</span>
+                <span class="contact-time" id="online-count">1 online</span>
+              </div>
+              <span class="contact-msg text-emerald">Active secure connection</span>
+            </div>
+          </div>
+          <div class="section-title">Online In This Space</div>
+          <div id="online-users-container"></div>
+          
+          <div style="padding: 20px; text-align: center; margin-top: 20px;">
+             <button id="leave-room-btn" class="secondary-btn" style="padding: 8px 16px; font-size: 13px;">Leave Space</button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Right Chat Window -->
+      <main class="chat-area">
+        <header class="chat-header">
+          <div class="contact-avatar global-avatar" id="room-icon" style="background-color: #00A884;">💬</div>
+          <div class="chat-title">
+            <h3 id="room-title">Secure Space</h3>
+            <span class="chat-subtitle" id="chat-subtitle">Code: --- • Connecting...</span>
+          </div>
+        </header>
+
+        <div class="messages-container" id="messages-container">
+          <!-- Messages will append here -->
+        </div>
+
+        <footer class="chat-footer">
+          <button type="button" class="icon-btn"><svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg></button>
+          
+          <form id="message-form" class="message-input-form" onsubmit="event.preventDefault();">
+            <input type="text" id="message-input" placeholder="Type a message" autocomplete="off" />
+          </form>
+
+          <button type="button" id="send-btn" class="icon-btn">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+          </button>
+        </footer>
+      </main>
+    </div>
+  </div>
+
+  <script type="module" src="/main.js"></script>
+</body>
+</html>
