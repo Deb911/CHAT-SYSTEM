@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: syncchat-ws-server
+    runtime: node
+    rootDir: vanilla-chat
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+    plan: free

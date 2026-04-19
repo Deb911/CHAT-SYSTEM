@@ -1,11 +1,19 @@
 // SyncChat WebSocket Server
-// Runs on ws://localhost:8080
+// Runs on ws://localhost:8080 (dev) or wss://your-render-url (prod)
 // Handles real-time messaging between users in named rooms
 
 import { WebSocketServer } from 'ws';
+import { createServer } from 'http';
 
-const PORT = 8080;
-const wss = new WebSocketServer({ port: PORT });
+const PORT = process.env.PORT || 8080;
+
+// HTTP server (required by Render.com to keep process alive)
+const httpServer = createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end('SyncChat WebSocket Server is running ✅');
+});
+
+const wss = new WebSocketServer({ server: httpServer });
 
 // rooms: { roomCode: Set<WebSocket> }
 const rooms = new Map();
@@ -79,5 +87,7 @@ wss.on('connection', (ws) => {
   ws.on('error', (err) => console.error('[WS Error]', err.message));
 });
 
-console.log(`✅ SyncChat WebSocket server running on ws://localhost:${PORT}`);
-console.log('   Waiting for connections...\n');
+httpServer.listen(PORT, () => {
+  console.log(`✅ SyncChat WebSocket server running on port ${PORT}`);
+  console.log('   Waiting for connections...\n');
+});

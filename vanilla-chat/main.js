@@ -1,8 +1,10 @@
 // SyncChat – main.js
-// Uses native WebSocket (ws://localhost:8080) instead of Insforge realtime channels.
-// No auth required. Messages broadcast instantly across all browsers/tabs in same room.
+// Uses native WebSocket for real-time messaging
+// WS_URL: set VITE_WS_URL env var in Vercel to point to Render backend
 
-const WS_URL = 'ws://localhost:8080';
+const WS_URL = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_WS_URL)
+  ? import.meta.env.VITE_WS_URL
+  : 'ws://localhost:8080';
 
 // ─── DOM refs ─────────────────────────────────────────────────────────────────
 const authScreen    = document.getElementById('auth-screen');
